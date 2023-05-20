@@ -1,5 +1,6 @@
 
 import java.security.SecureRandom;
+import java.util.Scanner;
 
 /*
  * Você lança dois dados. Cada dado tem seis faces que contêm um, dois, três, quatro, cinco e seis pontos,
@@ -24,46 +25,76 @@ um valor igual à sua pontuação). Você perde se obtiver um 7 antes de fazer s
 public class Dice {
 
     private static final SecureRandom randomNumbers = new SecureRandom();
+    Scanner sc = new Scanner(System.in);
 
     int myPoints = 0;
     Status gameStatus;
-    int sumOfDice = rollDice();
 
     public Status play() {
-        switch (sumOfDice) {
-            case 7:
-            case 11:
+
+        System.out.println("*** Bem vindo ao CRAPS ***");
+        while (true) {
+            System.out.println("Pressione enter para jogar os dados");
+
+            sc.nextLine();
+
+            int sumOfDice = rollDice();
+
+            if (sumOfDice == 7 || sumOfDice == 11) {
                 gameStatus = Status.WON;
+                System.out.println("Você ganhou!");
+                System.out.println("Deseja jogar outra vez ? (s/n)");
+                if (sc.nextLine().equals("n")) {
+                    System.out.println("Obrigado por jogar Craps! Até a próxima!");
+                    break;
+                }
+
                 break;
-            case 2:
-            case 3:
-            case 12:
+            } else if (sumOfDice == 2 || sumOfDice == 3 || sumOfDice == 12) {
                 gameStatus = Status.LOST;
-                break;
-            default:
+                System.out.println("Você perdeu!");
+                System.out.println("Deseja jogar outra vez ? (s/n)");
+                if (sc.nextLine().equals("n")) {
+                    System.out.println("Obrigado por jogar Craps! Até a próxima!");
+                    break;
+                }
+            } else {
                 gameStatus = Status.CONTINUE;
                 myPoints = sumOfDice;
-                System.out.printf("Point is %d%n", myPoints);
+
+                while (gameStatus == Status.CONTINUE) {
+                    System.out.println("Pressione enter para jogar os dados");
+                    sc.nextLine();
+                    sumOfDice = rollDice();
+
+                    if (sumOfDice == myPoints) {
+                        gameStatus = Status.WON;
+                        System.out.println("\u001B[32mVocê ganhou!\u001B[0m");
+
+                        break;
+                    } else if (sumOfDice == 7) {
+                        gameStatus = Status.LOST;
+                        System.out.println("\u001B[31mVocê perdeu!\u001B[0m");
+                        break;
+                    } else {
+
+                        gameStatus = Status.CONTINUE;
+                        System.out.printf("\u001B[33mSua pontuação é %d%n\u001B[0m", myPoints);
+                    }
+                }
+            }
+
+            System.out.println("Deseja jogar novamente ? (s/n)");
+            String answer = sc.nextLine();
+            if (answer.equals("n")) {
+                System.out.println("Obrigado por jogar Craps! Até a próxima!");
                 break;
-        }
 
-        while (gameStatus == Status.CONTINUE) {
-            sumOfDice = rollDice();
-
-            if (sumOfDice == myPoints) {
-                gameStatus = Status.WON;
-            } else if (sumOfDice == 7) {
-                gameStatus = Status.LOST;
             }
         }
 
-        if (gameStatus == Status.WON) {
-            System.out.println("\u001B[32mPlayer wins\u001B[32m");
-        } else {
-            System.out.println("\u001B[31mPlayer loses\u001B[31m");
-        }
-
         return gameStatus;
+
     }
 
     public int rollDice() {

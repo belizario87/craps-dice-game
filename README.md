@@ -49,6 +49,7 @@ O programa possui as seguintes funcionalidades:
 - Verificação do resultado do lançamento dos dados e informação se o jogador ganhou ou perdeu a aposta.
 - Capacidade de fazer várias apostas consecutivas sem reiniciar o programa.
 
-
+## Print do CRAPS
+image.png
 
 Divirta-se jogando Craps!
