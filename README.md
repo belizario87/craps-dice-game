@@ -50,6 +50,6 @@ O programa possui as seguintes funcionalidades:
 - Capacidade de fazer várias apostas consecutivas sem reiniciar o programa.
 
 ## Print do CRAPS
-image.png
+![image](https://github.com/belizario87/craps-dice-game/assets/43473532/4d9fd436-2e02-463c-99b9-d2a5619fd219)
 
 Divirta-se jogando Craps!
